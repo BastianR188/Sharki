@@ -1,7 +1,7 @@
 class World {
     character = new Character();
     bubbles = [];
-    level = level2;
+    level = level1;
     statusbar = statusbarScreen;
     canvas;
     ctx;
@@ -17,10 +17,8 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollision();
-        // this.checkNearbyEnemies();
         this.hitDetect();
-        this.checkCollectCoin();
-        this.checkCollectPoison();
+        this.checkCollectItems();
         this.checkShocked();
         this.checkAttackHit();
         this.startFinalEnemy();
@@ -143,31 +141,48 @@ class World {
         }, 1000 / 25);
     }
 
-    checkCollectPoison() {
+    checkCollectItems() {
         setInterval(() => {
-            for (let i = 0; i < this.level.poison.length; i++) {
-                const poison = this.level.poison[i];
-                if (this.character.isColliding(poison, 0)) {
-                    this.character.specialPower += 25;
-                    this.level.poison.splice(i, 1);
-                    break;
-                }
+            for (let i = 0; i < this.level.items.length; i++) {
+                const item = this.level.items[i];
+
+                if (this.character.isColliding(item, 0)) {
+                    if (item instanceof Coin) {
+                        this.character.collectedCoin += 1;
+                        this.level.items.splice(i, 1);
+                    }
+                    if (item instanceof Poison) {
+                        this.character.specialPower += 25;
+                        this.level.items.splice(i, 1);
+                    }
+
+                };
             }
-        })
+        }, 1000 / 60);
     }
 
-    checkCollectCoin() {
-        setInterval(() => {
-            for (let i = 0; i < this.level.coins.length; i++) {
-                const coin = this.level.coins[i];
-                if (this.character.isColliding(coin, 0)) {
-                    this.character.collectedCoin += 1;
-                    this.level.coins.splice(i, 1);
-                    break;
-                }
-            }
-        })
-    }
+    //         for (let i = 0; i < this.level.items.length; i++) {
+    //             const item = this.level.items[i];
+    //             if (this.character.isColliding(item, 0)) {
+    //                 this.character.specialPower += 25;
+    //                 this.level.poison.splice(i, 1);
+    //                 break;
+    //             }
+    //         }
+    //     })
+
+    // checkCollectCoin() {
+    //     setInterval(() => {
+    //         for (let i = 0; i < this.level.coins.length; i++) {
+    //             const coin = this.level.coins[i];
+    //             if (this.character.isColliding(coin, 0)) {
+    //                 this.character.collectedCoin += 1;
+    //                 this.level.coins.splice(i, 1);
+    //                 break;
+    //             }
+    //         }
+    //     })
+    // }
 
     checkAttackHit() {
         setInterval(() => {
@@ -203,7 +218,7 @@ class World {
         this.addObjectsToMap(this.statusbar.statusbarPoison);
         this.addObjectsToMap(this.statusbar.statusbarLive);
         this.addObjectsToMap(this.statusbar.statusbarCoin);
-        this.addObjectsToMap(this.level.statusbarFinalEnemy);
+        // this.addObjectsToMap(this.level.statusbarFinalEnemy);
         this.ctx.font = "30px Luckiest Guy";
         this.ctx.fillStyle = "#ffffff";
         this.ctx.fillText(this.character.specialPower, 55, 50);

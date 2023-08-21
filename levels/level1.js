@@ -41,6 +41,9 @@ const level1 = new Level(
         new BackgroundObjects('img/3. Background/Layers/1. Light/2.png', 2580, 0),
     ],
     [
+        new Poison('./img/4. Marcadores/Posión/Animada/1.png', 1600, 50),
+        new Poison('./img/4. Marcadores/Posión/Animada/1.png', 800, 160),
+        new Poison('./img/4. Marcadores/Posión/Animada/1.png', 2500, 380),
         new Coin('./img/4. Marcadores/1. Coins/1.png', 300, 240),
         new Coin('./img/4. Marcadores/1. Coins/1.png', 425, 240),
         new Coin('./img/4. Marcadores/1. Coins/1.png', 550, 240),
@@ -60,12 +63,7 @@ const level1 = new Level(
         new Coin('./img/4. Marcadores/1. Coins/1.png', 2200, 240),
         new Coin('./img/4. Marcadores/1. Coins/1.png', 2250, 330),
         new Coin('./img/4. Marcadores/1. Coins/1.png', 2300, 420),
-        new Poison('./img/4. Marcadores/Posión/Animada/1.png', 1600, 50),
-        new Poison('./img/4. Marcadores/Posión/Animada/1.png', 800, 160),
-        new Poison('./img/4. Marcadores/Posión/Animada/1.png', 2500, 380),
     ],
-    [
-        new StatusBar('./img/4. Marcadores/orange/100_  copia.png', 450, -60, 250, 60),     // statusbarFinalEnemy
-    ]
+
 
 );
