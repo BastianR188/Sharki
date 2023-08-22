@@ -102,8 +102,8 @@ class FinalEnemy extends MoveableObject {
 
         setInterval(() => {
             try {
-                if (this.StartIntro && world.level.statusbarFinalEnemy[0].y < 0) {
-                    world.level.statusbarFinalEnemy[0].y += 1;
+                if (this.StartIntro && world.statusbar.statusbarFinalEnemy[0].y < 0) {
+                    world.statusbar.statusbarFinalEnemy[0].y += 1;
                 }
             } catch { }
         }, 1000 / 60);
@@ -111,17 +111,17 @@ class FinalEnemy extends MoveableObject {
         setInterval(() => {
             try {
                 if (this.live <= 0) {
-                    world.level.statusbarFinalEnemy[0].img.src = './img/4. Marcadores/orange/0_  copia.png';
+                    world.statusbar.statusbarFinalEnemy[0].images = './img/4. Marcadores/orange/0_  copia.png';
                 } else if (this.live <= 20) {
-                    world.level.statusbarFinalEnemy[0].img.src = './img/4. Marcadores/orange/20_ copia 2.png';
+                    world.statusbar.statusbarFinalEnemy[0].images = './img/4. Marcadores/orange/20_ copia 2.png';
                 } else if (this.live <= 40) {
-                    world.level.statusbarFinalEnemy[0].img.src = './img/4. Marcadores/orange/40_  copia.png';
+                    world.statusbar.statusbarFinalEnemy[0].images = './img/4. Marcadores/orange/40_  copia.png';
                 } else if (this.live <= 60) {
-                    world.level.statusbarFinalEnemy[0].img.src = './img/4. Marcadores/orange/60_  copia.png';
+                    world.statusbar.statusbarFinalEnemy[0].images = './img/4. Marcadores/orange/60_  copia.png';
                 } else if (this.live <= 80) {
-                    world.level.statusbarFinalEnemy[0].img.src = './img/4. Marcadores/orange/80_  copia.png';
+                    world.statusbar.statusbarFinalEnemy[0].images = './img/4. Marcadores/orange/80_  copia.png';
                 } else {
-                    world.level.statusbarFinalEnemy[0].img.src = './img/4. Marcadores/orange/100_  copia.png';
+                    world.statusbar.statusbarFinalEnemy[0].images = './img/4. Marcadores/orange/100_  copia.png';
                 }
             } catch { }
         }, 1000 / 25);

@@ -218,7 +218,7 @@ class World {
         this.addObjectsToMap(this.statusbar.statusbarPoison);
         this.addObjectsToMap(this.statusbar.statusbarLive);
         this.addObjectsToMap(this.statusbar.statusbarCoin);
-        // this.addObjectsToMap(this.level.statusbarFinalEnemy);
+        this.addObjectsToMap(this.statusbar.statusbarFinalEnemy);
         this.ctx.font = "30px Luckiest Guy";
         this.ctx.fillStyle = "#ffffff";
         this.ctx.fillText(this.character.specialPower, 55, 50);
