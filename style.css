@@ -4,7 +4,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url("./img/bg/bg3.jpg");
+    background-image: url("./img/bg/bg.jpg");
     background-size: cover;
     height: 100vh;
     font-family: 'Luckiest Guy', Tahoma, Verdana, sans-serif;

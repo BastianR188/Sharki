@@ -1,7 +1,7 @@
 const level2 = new Level(
 
     [
-        new FinalEnemy('./img/2.Enemy/3 Final Enemy/1.Introduce/1.png', 2400, 0, 2000),
+        // new FinalEnemy('./img/2.Enemy/3 Final Enemy/1.Introduce/1.png', 2400, 0, 2000),
         new PufferFish('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png', 600, 600),
     ],
     [
@@ -57,7 +57,4 @@ const level2 = new Level(
         new Poison('./img/4. Marcadores/Posión/Animada/1.png', 800, 160),
         new Poison('./img/4. Marcadores/Posión/Animada/1.png', 2500, 380),
     ],
-    [
-        new StatusBar('./img/4. Marcadores/orange/100_  copia.png', 450, -60, 250, 60),     // statusbarFinalEnemy
-    ]
 );
