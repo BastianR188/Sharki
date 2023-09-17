@@ -7,7 +7,7 @@ statusbarFinalEnemy_Images = [
     'img/4. Marcadores/orange/100_  copia.png',
 ]
 
-const statusbarScreen = new Statusbar(
+const statusbarScreen = new Hud(
 
     [
         new StatusBar('./img/4. Marcadores/green/100_ copia 5.png', 0, 0, 65, 65)          // statusbarPoison

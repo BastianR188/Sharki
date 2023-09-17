@@ -143,30 +143,28 @@ class PufferFish extends MoveableObject {
     }
     getRandomImage(images, img1, img2, img3) {
         let selectedImages;
-        if (this.randomIndex === 1) {
-            selectedImages = img1;
-        } else if (this.randomIndex === 2) {
-            selectedImages = img2;
-        } else {
-            selectedImages = img3;
-        }
+        selectedImages = this.selectedImg(selectedImages, img1, img2, img3);
         for (let i = 0; i < selectedImages.length; i++) {
             images.push(selectedImages[i]);
         }
         return images;
     }
 
+    selectedImg(selectedImages, img1, img2, img3) {
+        if (this.randomIndex === 1) {
+            selectedImages = img1;
+        } if (this.randomIndex === 2) {
+            selectedImages = img2;
+        }
+        selectedImages = img3;
+        return selectedImages;
+    }
+
     Animate() {
         setInterval(() => {
             try {
                 if (!this.isDead() && !world.character.isDead() && !this.isAnimating) {
-                    if (world.character.isNearby(this) < 250 && !this.isNear) {
-                        this.isNear = true;
-                        this.playAnimationAtOnce(this.Transition_Images);
-                    } else if (world.character.isNearby(this) > 250 && this.isNear) {
-                        this.isNear = false;
-                        this.playAnimationAtOnce(this.TransitionReverse_Images);
-                    }
+                    this.transitionAnimation();
                 }
             } catch { }
         }, 1000 / 60);
@@ -175,19 +173,37 @@ class PufferFish extends MoveableObject {
 
         let intervalId = setInterval(() => {
             if (this.isDead()) {
-                if (Math.random() > 0.5) {
-                    this.DeadGround();
-                } else {
-                    this.DeadFly();
-                } clearInterval(intervalId);
+                this.deadAnimation(intervalId);
             } else if (this.isNear == true) {
-                if (!this.isAnimating) {
-                    this.playAnimation(this.BubbleSwim_Images)
-                }
+                this.attackAnimation();
             } else {
                 this.playAnimation(this.Swim_Images);
             }
         }, 100);
+    }
+
+    attackAnimation() {
+        if (!this.isAnimating) {
+            this.playAnimation(this.BubbleSwim_Images);
+        }
+    }
+
+    deadAnimation(intervalId) {
+        if (Math.random() > 0.5) {
+            this.DeadGround();
+        } else {
+            this.DeadFly();
+        } clearInterval(intervalId);
+    }
+
+    transitionAnimation() {
+        if (world.character.isNearby(this) < 250 && !this.isNear) {
+            this.isNear = true;
+            this.playAnimationAtOnce(this.Transition_Images);
+        } else if (world.character.isNearby(this) > 250 && this.isNear) {
+            this.isNear = false;
+            this.playAnimationAtOnce(this.TransitionReverse_Images);
+        }
     }
 
     DeadFly() {

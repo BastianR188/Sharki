@@ -180,36 +180,10 @@ class Character extends MoveableObject {
         setInterval(() => {
             if (!this.isDead() && !this.isHurt() && !this.isAnimating) {
                 if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                    if (this.world.ceckFinalFight()) {
-                        if (this.x < 2480) {
-                            this.x += this.speed;
-                        }
-                    } else {
-                        this.x += this.speed;
-                        this.backgroundAnimation(this.bgb, 0.9);
-                        this.backgroundAnimation(this.bgf, 0.6);
-                        this.backgroundAnimation(this.bgl, 0.3);
-                        if (this.world.camera_x >= -this.x + 100) {
-                            this.world.camera_x = this.world.camera_x - this.speed - this.speed;
-                        }
-                    }
-                    this.otherDirection = false;
+                    this.moveCharRight();
                 }
                 if (this.world.keyboard.LEFT && this.x > -760) {
-                    if (this.world.ceckFinalFight()) {
-                        if (this.x > 1780) {
-                            this.x -= this.speed;
-                        }
-                    } else {
-                        this.x -= this.speed;
-                        this.backgroundAnimation(this.bgb, -0.9);
-                        this.backgroundAnimation(this.bgf, -0.6);
-                        this.backgroundAnimation(this.bgl, -0.3);
-                        if (this.world.camera_x <= -this.x + (600 - this.width)) {
-                            this.world.camera_x = this.world.camera_x + this.speed + this.speed;
-                        }
-                    }
-                    this.otherDirection = true;
+                    this.moveCharLeft();
                 }
                 if (this.world.keyboard.UP && this.y > -170) {
                     this.y -= this.speed;
@@ -219,39 +193,24 @@ class Character extends MoveableObject {
                 }
             }
         })
+
         let intervallIDAnimation = setInterval(() => {
             if (this.isDead()) {
-                if (this.isShocked) {
-                    this.deadShockAnimation();
-                } else {
-                    this.deadPoisonedAnimation();
-                } clearInterval(intervallIDAnimation);
-            } else if (this.isHurt()) {
-                if (this.isShocked) {
-                    this.playAnimation(this.HurtElectricShock_Images);
-                } else {
-                    this.playAnimation(this.HurtPoisoned_Images);
-                } this.resetIdleTimer();
-            } else if (this.spamProtect()) {
+                this.CharDeadAnimation(intervallIDAnimation);
+            } if (this.isHurt()) {
+                this.CharHurtAnimation();
+            } if (this.spamProtect()) {
                 this.playAnimation(this.SpamProtect_Images);
-            } else if (this.world.keyboard.SPACE == true || this.isAnimating == true) {
-                this.resetIdleTimer();
-                return
-            } else if (this.world.keyboard.RIGHT == true || this.world.keyboard.LEFT == true || this.world.keyboard.UP == true || this.world.keyboard.DOWN == true) {
-                this.playAnimation(this.Swim_Images);
-                this.resetIdleTimer();
-                world.character.isIdle = false;
-            } else if (this.isIdle == true) {
-                this.playAnimationAtOnce(this.LongIdle_Images);
-                setTimeout(this.playAnimation(this.Sleep_Images, 2380));
-            } else {
-                this.playAnimation(this.Idle_Images);
+            } if (this.world.keyboard.SPACE == true || this.isAnimating == true) {
+                return this.resetIdleTimer();
+            } if (this.world.keyboard.RIGHT == true || this.world.keyboard.LEFT == true || this.world.keyboard.UP == true || this.world.keyboard.DOWN == true) {
+                this.CharSwimAnimation();
+            } if (this.isIdle == true) {
+                this.CharIdleAnimation();
             }
+            this.playAnimation(this.Idle_Images);
         }, 170);
-        // animationen
-        // setStoppableInterval(this.characterAnimation, 170);
 
-        // intervalIds.push(intervallIDAnimation);
         document.addEventListener('keydown', (event) => {
             if (event.code === 'Space' && !this.isAnimating && !this.isDead()) {
                 this.attack(this.Finslap_Images, null, null, true);
@@ -262,22 +221,103 @@ class Character extends MoveableObject {
                 let withPoison = false;
                 let img = '';
                 if (this.specialPower > 0) {
-                    img = this.Bubble_Images;
-                    this.bubble = './img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png';
-                    this.specialPower -= 20;
-                    withPoison = true;
-                    if (this.specialPower < 0) {
-                        this.specialPower = 0;
-                    }
+                    ({ img, withPoison } = this.attackWithSpecial(img, withPoison));
                 } else {
-                    img = this.BubbleWithOutPoison_Images;
-                    this.bubble = './img/1.Sharkie/4.Attack/Bubble trap/Bubble.png';
+                    img = this.attackWithoutSpecial(img);
                 }
                 this.attack(img, this.bubble, withPoison);
             }
         });
 
     }
+
+    attackWithoutSpecial(img) {
+        img = this.BubbleWithOutPoison_Images;
+        this.bubble = './img/1.Sharkie/4.Attack/Bubble trap/Bubble.png';
+        return img;
+    }
+
+    attackWithSpecial(img, withPoison) {
+        img = this.Bubble_Images;
+        this.bubble = './img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png';
+        this.specialPower -= 20;
+        withPoison = true;
+        if (this.specialPower < 0) {
+            this.specialPower = 0;
+        }
+        return { img, withPoison };
+    }
+
+    CharIdleAnimation() {
+        this.playAnimationAtOnce(this.LongIdle_Images);
+        setTimeout(this.playAnimation(this.Sleep_Images, 2380));
+    }
+
+    CharSwimAnimation() {
+        this.playAnimation(this.Swim_Images);
+        this.resetIdleTimer();
+        world.character.isIdle = false;
+    }
+
+    CharHurtAnimation() {
+        if (this.isShocked) {
+            this.playAnimation(this.HurtElectricShock_Images);
+        } else {
+            this.playAnimation(this.HurtPoisoned_Images);
+        } this.resetIdleTimer();
+    }
+
+    CharDeadAnimation(intervallIDAnimation) {
+        if (this.isShocked) {
+            this.deadShockAnimation();
+        } else {
+            this.deadPoisonedAnimation();
+        } clearInterval(intervallIDAnimation);
+    }
+
+    moveCharLeft() {
+        if (this.world.ceckFinalFight()) {
+            if (this.x > 1780) {
+                this.x -= this.speed;
+            }
+        } else {
+            this.moveCameraLeft();
+        }
+        this.otherDirection = true;
+    }
+
+    moveCameraLeft() {
+        this.moveBg(-this.speed, -0.9, -0.6, -0, 3);
+        if (this.world.camera_x <= -this.x + (600 - this.width)) {
+            this.world.camera_x = this.world.camera_x + this.speed + this.speed;
+        }
+    }
+
+    moveCharRight() {
+        if (this.world.ceckFinalFight()) {
+            if (this.x < 2480) {
+                this.x += this.speed;
+            }
+        } else {
+            this.moveCameraRight();
+        }
+        this.otherDirection = false;
+    }
+
+    moveCameraRight() {
+        this.moveBg(this.speed, 0.9, 0.6, 0, 3);
+        if (this.world.camera_x >= -this.x + 100) {
+            this.world.camera_x = this.world.camera_x - this.speed - this.speed;
+        }
+    }
+
+    moveBg(speed, sbgb, sbgf, sbgl) {
+        this.x += speed;
+        this.backgroundAnimation(this.bgb, sbgb);
+        this.backgroundAnimation(this.bgf, sbgf);
+        this.backgroundAnimation(this.bgl, sbgl);
+    }
+
     backgroundAnimation(bg, time) {
         for (let i = 0; i < bg.length; i++) {
             this.world.level.bgo[bg[i]].x += time;
