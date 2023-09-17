@@ -26,7 +26,7 @@ class Bubble extends MoveableObject {
     x;
     y;
 
-
+    // img, position x, position y, in welche Richtung, ob mit oder ohne gift
     constructor(img, x, y, od, p) {
         super().loadImage(img);
         this.loadImages(this.bubble_Images);
@@ -49,8 +49,10 @@ class Bubble extends MoveableObject {
             this.moveRight();
         }
 
+        // das die Blase eine auf und ab Bewegung macht
         this.waveMove();
 
+        // spielt die animation ab
         setInterval(() => {
             this.playAnimation(this.Images);
         }, 75)

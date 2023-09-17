@@ -30,10 +30,7 @@ class World {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    setStoppableInterval(fn, time) {
-        let id = setInterval(fn, time);
-        intervalIds.push(id);
-    }
+
     setWorld() {
         this.character.world = this;
     }
@@ -206,7 +203,6 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.bgo);
-        this.addObjectsToMap(this.statusbar.YouwinBG);
         this.addObjectsToMap(this.level.items);
 
         this.addToMap(this.character);
@@ -225,9 +221,6 @@ class World {
         this.ctx.fillText(this.character.live, 180, 50);
         this.ctx.fillText(this.character.collectedCoin, 305, 50);
         this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.statusbar.botonYouWin);
-        this.addObjectsToMap(this.statusbar.botonGameOver);
-        this.addObjectsToMap(this.statusbar.botonTryAgain);
 
         this.ctx.translate(-this.camera_x, 0);
         // Draw() wird immer wieder aufgerufen

@@ -13,6 +13,7 @@ function init() {
     ctx = canvas.getContext('2d');
 }
 
+// prüft ob eine Taste gedrückt wird
 document.addEventListener("keydown", function (event) {
     if (event.keyCode === 37) {
         keyboard.LEFT = true;
@@ -34,6 +35,7 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
+// prüft ob die jeweilige Taste losgelassen wird
 document.addEventListener("keyup", function (event) {
     if (event.keyCode === 37) {
         keyboard.LEFT = false;
@@ -54,37 +56,10 @@ document.addEventListener("keyup", function (event) {
         keyboard.D = false;
     }
 });
-document.addEventListener("click", function (event) {
-    try {
-        let canvasRect = canvas.getBoundingClientRect(); // Position des Canvas-Elements auf der Seite
-        let mouseX = event.clientX - canvasRect.left - world.camera_x;
-        let mouseY = event.clientY - canvasRect.top;
-        let botton = world.statusbar;
-        if (mouseX >= botton.botonTryAgain[0].x && mouseX <= botton.botonTryAgain[0].x + botton.botonTryAgain[0].width && mouseY >= botton.botonTryAgain[0].y && mouseY <= botton.botonTryAgain[0].y + botton.botonTryAgain[0].height) {
-            botton.botonTryAgain[0].isClicked = true;
-            console.log('Try Again wurde angeklickt!');
-            this.restartGame();
-        }
-    } catch (e) { }
-});
 
-document.addEventListener("mousemove", function (event) {
-    try {
-        let canvasRect = canvas.getBoundingClientRect(); // Position des Canvas-Elements auf der Seite
-        let mouseX = event.clientX - canvasRect.left - world.camera_x;
-        let mouseY = event.clientY - canvasRect.top;
-        let botton = world.statusbar;
-        if (mouseX >= botton.botonTryAgain[0].x && mouseX <= botton.botonTryAgain[0].x + botton.botonTryAgain[0].width && mouseY >= botton.botonTryAgain[0].y && mouseY <= botton.botonTryAgain[0].y + botton.botonTryAgain[0].height) {
-            botton.botonTryAgain[0].isHovered = true;
-        } else {
-            botton.botonTryAgain[0].isHovered = false;
-        }
-    } catch (e) { }
-});
-
+// das spiel neustarten
 function restartGame() {
-    world = []
-    // clearAllIntervals();
+
     document.getElementById('gameboard').innerHTML = ``;
     document.getElementById('start-button').innerHTML = ``;
 
@@ -92,6 +67,3 @@ function restartGame() {
 
 
 
-// function clearAllIntervals() {
-//     for (let i = 1; i < 9999; i++) window.clearInterval(i);
-// }

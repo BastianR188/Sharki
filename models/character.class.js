@@ -146,7 +146,9 @@ class Character extends MoveableObject {
         './img/1.Sharkie/1.IDLE/6.png',
         '',
         './img/1.Sharkie/1.IDLE/4.png',
-    ]
+    ];
+
+
     bgb = [5, 6, 7, 8, 9]
     bgf = [10, 11, 12, 13, 14]
     bgl = [20, 21, 22, 23, 24]
@@ -169,9 +171,12 @@ class Character extends MoveableObject {
 
     }
 
-    Animate() {
-        // KameraFührung
 
+    Animate() {
+
+
+
+        // KameraFührung wenn der Character sich bewegt
         setInterval(() => {
             if (!this.isDead() && !this.isHurt() && !this.isAnimating) {
                 if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -181,18 +186,9 @@ class Character extends MoveableObject {
                         }
                     } else {
                         this.x += this.speed;
-                        for (let i = 0; i < this.bgb.length; i++) {
-                            let value = this.bgb[i];
-                            this.world.level.bgo[value].x += 0.7;
-                        }
-                        for (let i = 0; i < this.bgf.length; i++) {
-                            let value = this.bgf[i];
-                            this.world.level.bgo[value].x += 0.5;
-                        }
-                        for (let i = 0; i < this.bgl.length; i++) {
-                            const value = this.bgl[i];
-                            this.world.level.bgo[value].x += 0.3;
-                        }
+                        this.backgroundAnimation(this.bgb, 0.9);
+                        this.backgroundAnimation(this.bgf, 0.6);
+                        this.backgroundAnimation(this.bgl, 0.3);
                         if (this.world.camera_x >= -this.x + 100) {
                             this.world.camera_x = this.world.camera_x - this.speed - this.speed;
                         }
@@ -206,18 +202,9 @@ class Character extends MoveableObject {
                         }
                     } else {
                         this.x -= this.speed;
-                        for (let i = 0; i < this.bgb.length; i++) {
-                            let value = this.bgb[i];
-                            this.world.level.bgo[value].x -= 0.7;
-                        }
-                        for (let i = 0; i < this.bgf.length; i++) {
-                            let value = this.bgf[i];
-                            this.world.level.bgo[value].x -= 0.5;
-                        }
-                        for (let i = 0; i < this.bgl.length; i++) {
-                            const value = this.bgl[i];
-                            this.world.level.bgo[value].x -= 0.3;
-                        }
+                        this.backgroundAnimation(this.bgb, -0.9);
+                        this.backgroundAnimation(this.bgf, -0.6);
+                        this.backgroundAnimation(this.bgl, -0.3);
                         if (this.world.camera_x <= -this.x + (600 - this.width)) {
                             this.world.camera_x = this.world.camera_x + this.speed + this.speed;
                         }
@@ -290,6 +277,11 @@ class Character extends MoveableObject {
             }
         });
 
+    }
+    backgroundAnimation(bg, time) {
+        for (let i = 0; i < bg.length; i++) {
+            this.world.level.bgo[bg[i]].x += time;
+        }
     }
     deadShockAnimation() {
         this.playAnimationAtOnce(this.DeadShocked_Images);
