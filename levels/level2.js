@@ -1,8 +1,7 @@
 const level2 = new Level(
 
     [
-        // new FinalEnemy('./img/2.Enemy/3 Final Enemy/1.Introduce/1.png', 2400, 0, 2000),
-        new PufferFish('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png', 600, 600),
+        new FinalEnemy('./img/2.Enemy/3 Final Enemy/1.Introduce/1.png', 2400, 0, 2000),
     ],
     [
         new BackgroundObjects('img/3. Background/Layers/5. Water/D2.png', -860, 0),

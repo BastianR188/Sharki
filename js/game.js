@@ -4,6 +4,7 @@ let world;
 let keyboard = new Keyboard();
 
 
+
 function init() {
     document.getElementById('gameboard').innerHTML = `<canvas id="canvas" width="720p" height="480"></canvas>`;
     document.getElementById('start-button').innerHTML = ``;
@@ -82,16 +83,15 @@ document.addEventListener("mousemove", function (event) {
 });
 
 function restartGame() {
-    world.character = []
-    world.level = []
-    clearAllIntervals();
+    world = []
+    // clearAllIntervals();
     document.getElementById('gameboard').innerHTML = ``;
     document.getElementById('start-button').innerHTML = ``;
-    world = [];
-    init();
-    world.reset();
+
 }
 
-function clearAllIntervals() {
-    for (let i = 1; i < 9999; i++) window.clearInterval(i);
-}
+
+
+// function clearAllIntervals() {
+//     for (let i = 1; i < 9999; i++) window.clearInterval(i);
+// }

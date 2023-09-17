@@ -1,5 +1,5 @@
 class Character extends MoveableObject {
-    x = 0;
+    x = 100;
     y = 200;
     height = 300;
     width = 245;
@@ -168,8 +168,10 @@ class Character extends MoveableObject {
         this.Animate();
 
     }
+
     Animate() {
         // KameraFührung
+
         setInterval(() => {
             if (!this.isDead() && !this.isHurt() && !this.isAnimating) {
                 if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -230,8 +232,6 @@ class Character extends MoveableObject {
                 }
             }
         })
-
-        // animationen
         let intervallIDAnimation = setInterval(() => {
             if (this.isDead()) {
                 if (this.isShocked) {
@@ -255,11 +255,15 @@ class Character extends MoveableObject {
                 this.resetIdleTimer();
                 world.character.isIdle = false;
             } else if (this.isIdle == true) {
-                this.playAnimation(this.Sleep_Images);
+                this.playAnimationAtOnce(this.LongIdle_Images);
+                setTimeout(this.playAnimation(this.Sleep_Images, 2380));
             } else {
                 this.playAnimation(this.Idle_Images);
             }
-        }, 170)
+        }, 170);
+        // animationen
+        // setStoppableInterval(this.characterAnimation, 170);
+
         // intervalIds.push(intervallIDAnimation);
         document.addEventListener('keydown', (event) => {
             if (event.code === 'Space' && !this.isAnimating && !this.isDead()) {
@@ -304,7 +308,6 @@ class Character extends MoveableObject {
 
     setIdle() {
         world.character.isIdle = true;
-        this.playAnimationAtOnce(this.LongIdle_Images);
     }
 }
 

@@ -24,7 +24,7 @@ class Botons extends MoveableObject {
         this.Animate();
     }
     Animate() {
-        let intervallIDAnimate = setInterval(() => {
+        setInterval(() => {
             if (this.isClicked) {
                 this.Images = this.clickedImg;
             } else if (this.isHovered) {

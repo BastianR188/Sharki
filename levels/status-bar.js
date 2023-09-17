@@ -46,7 +46,7 @@ const statusbarScreen = new Statusbar(
         new StatusBar('./img/4. Marcadores/green/100_ copia 6.png', 240, 5, 65, 65)        // statusbarCoin
     ],
     [
-        new Botons('./img/4. Marcadores/orange/100_  copia.png', 460, 0, statusbarFinalEnemy_Images, 240, 65, Dumb_Img, Dumb_Img),   // LiveBar FinalEnemey
+        new StatusBar('./img/4. Marcadores/orange/100_  copia.png', 460, -65, 240, 65, statusbarFinalEnemy_Images),   // LiveBar FinalEnemey
     ],
     [
         new Botons('./img/6.Botones/Tittles/You win/Recurso 19.png', 2091, -240, YouWin_Images, 337, 84, Dumb_Img, Dumb_Img), // YouWin text

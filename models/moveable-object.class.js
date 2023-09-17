@@ -14,7 +14,10 @@ class MoveableObject extends DrawAbleObject {
     attackPower = 0;
     spamProtection = false;
 
-
+    setStoppableInterval(fn, time) {
+        let id = setInterval(fn, time);
+        intervalIds.push(id);
+    }
 
     applySwimGravity() {
         setInterval(() => {
