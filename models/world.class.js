@@ -8,7 +8,6 @@ class World {
     keyboard;
     camera_x = 0;
     intervalIds = [];
-    collectCoinSound = new Audio('audio/coin2.mp3')
 
 
     constructor(canvas, keyboard) {
@@ -27,6 +26,8 @@ class World {
         this.checkLose();
 
     }
+
+
     reset() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
@@ -34,6 +35,8 @@ class World {
 
     setWorld() {
         this.character.world = this;
+        const backgroundsound = new Audio('audio/backsound.mp3');
+        backgroundsound.play();
     }
 
     startFinalEnemy() {
@@ -82,6 +85,8 @@ class World {
     checkWin() {
         let checkWinIntervall = setInterval(() => {
             if (this.level.enemies[0].isDead()) {
+                const bossDieSound = new Audio('audio/bossdie.mp3');
+                bossDieSound.play();
                 this.YouWin();
                 clearInterval(checkWinIntervall);
             }
@@ -89,14 +94,14 @@ class World {
     };
 
     YouWin() {
-        let YouWinIntervall = setInterval(() => {
-            this.statusbar.botonYouWin[0].y += 2;
-            this.statusbar.YouwinBG[0].y += 2;
-            if (this.statusbar.botonYouWin[0].y >= 239) {
-                this.TryAgain();
-                clearInterval(YouWinIntervall);
-            }
-        }, 1000 / 60);
+        // let YouWinIntervall = setInterval(() => {
+        //     this.statusbar.botonYouWin[0].y += 2;
+        //     this.statusbar.YouwinBG[0].y += 2;
+        //     if (this.statusbar.botonYouWin[0].y >= 239) {
+        //         this.TryAgain();
+        //         clearInterval(YouWinIntervall);
+        //     }
+        // }, 1000 / 60);
     }
 
     ceckFinalFight() {

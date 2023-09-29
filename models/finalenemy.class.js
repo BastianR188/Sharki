@@ -17,6 +17,7 @@ class FinalEnemy extends MoveableObject {
     attacking = false; // ob der Gegner gerade angreift
     attackDistance = 115; // wie weit der angriff gehen soll
     direktion = -1; // gibt an welche Richtung
+    finalEnemySoundAttack = new Audio('audio/bossattack.mp3');
 
     Introduce_Images = [
         './img/2.Enemy/3 Final Enemy/1.Introduce/1.png',
@@ -93,9 +94,11 @@ class FinalEnemy extends MoveableObject {
     }
     Animate() {
         let intervalStartId = setInterval(() => { // start animation
-            if (this.StartIntro) {
+            if (this.StartIntro) {  
                 this.playAnimationAtOnce(this.Introduce_Images);
                 this.spamProtection = false;
+                const introSound = new Audio('audio/finalenemyintro.mp3');
+                introSound.play();
                 clearInterval(intervalStartId);
             }
         }, 1000 / 25);
@@ -188,6 +191,7 @@ class FinalEnemy extends MoveableObject {
                 this.speed = Math.floor(Math.random() * 2) + 1; // Wähle eine neue zufällige Geschwindigkeit
                 this.attacking = false; // Setze das Flag für den Angriff zurück
             }
+            this.finalEnemySoundAttack.play();
         }
     }
 
