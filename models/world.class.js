@@ -8,6 +8,7 @@ class World {
     keyboard;
     camera_x = 0;
     intervalIds = [];
+    collectCoinSound = new Audio('audio/coin2.mp3')
 
 
     constructor(canvas, keyboard) {
@@ -129,6 +130,8 @@ class World {
                             if (bubble.isPoison == true) {
                                 enemy.live -= this.character.specialAttackPoisonPower;
                             } else { enemy.live -= this.character.specialAttackPower; }
+                            const bubbleHitSound = new Audio('audio/bubbleHit.mp3'); // create a new instance of the Audio class
+                            bubbleHitSound.play(); // play the sound
                             enemy.lastHit = new Date().getTime();
                             this.bubbles.splice(this.bubbles.indexOf(bubble), 1);
                         }
@@ -145,6 +148,8 @@ class World {
 
                 if (this.character.isColliding(item, 0)) {
                     if (item instanceof Coin) {
+                        const collectCoinSound = new Audio('audio/coin2.mp3'); // create a new instance of the Audio class
+                        collectCoinSound.play(); // play the sound
                         this.character.collectedCoin += 1;
                         this.level.items.splice(i, 1);
                     }

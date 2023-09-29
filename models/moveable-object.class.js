@@ -173,6 +173,8 @@ class MoveableObject extends DrawAbleObject {
         let bubble
         if (od) { bubble = new Bubble(img, this.x, this.y + this.height / 2, od, p) }
         else { bubble = new Bubble(img, this.x + this.colx + this.colwidth, this.y + this.height / 2, od, p) }
+        const createBubbleSound = new Audio('audio/bubbleAttack.mp3');
+        createBubbleSound.play();
         world.bubbles.push(bubble);
     }
 
