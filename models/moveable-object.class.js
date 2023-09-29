@@ -99,7 +99,7 @@ class MoveableObject extends DrawAbleObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
-        return timepassed < 0.7;
+        return timepassed < 0.5;
     }
 
     spamProtect() {

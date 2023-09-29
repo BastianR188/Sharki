@@ -41,7 +41,6 @@ class World {
 
     startFinalEnemy() {
         let intervalId = setInterval(() => {
-
             this.level.enemies.forEach((enemy) => {
                 if (enemy instanceof FinalEnemy) {
                     if (this.character.x >= enemy.introDistance) {

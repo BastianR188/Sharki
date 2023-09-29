@@ -75,7 +75,7 @@ class FinalEnemy extends MoveableObject {
         './img/4. Marcadores/orange/80_  copia.png',
         './img/4. Marcadores/orange/100_  copia.png',
     ]
-
+    FinalEnemyHitSound = new Audio('audio/bosshit.mp3');
 
 
     constructor(img, x, y, intro) {
@@ -141,6 +141,7 @@ class FinalEnemy extends MoveableObject {
                     this.playAnimationAtOnce(this.Dead_Images);
                     clearInterval(intervalId);
                 } else if (this.isHurt()) {
+this.FinalEnemyHitSound.play();
                     this.playAnimation(this.Hurt_Images);
                 } else if (this.attacking) {
                     this.playAnimation(this.Attack_Images);
