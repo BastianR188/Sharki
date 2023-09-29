@@ -39,17 +39,23 @@
 
     <h1>Sharki</h1>
     <div class="main_menu" id="main-menu">
-        <div id="start-button" class="m5">
+        <div id="start-button" class="firstline">
             <button class="btn" onclick="init()">Start</button>
         </div>
         <div class="">
             <button class="btn">Settings</button>
         </div>
-        <div class="m10">
+        <div class="lastline">
             <button class="btn">Score</button>
         </div>
     </div>
-    <div id="gameboard"></div>
+    <div class="game_board">
+        <div id="gameboard">
+        </div>
+        <div class="overlays">
+            <div class="youWin"><img src="img/6.Botones/Tittles/You win/Mesa de trabajo 1.png"></div>
+        </div>
+    </div>
     <div>
         <button onclick="restartGame()">Rest</button>
     </div>

@@ -41,11 +41,22 @@ h1 {
     cursor: pointer;
 }
 
-.m5 {
+.overlays {
+    position: absolute;
+    inset: 0;
+    width: 720px;
+    height: 480px;
+}
+
+.game_board {
+    position: relative;
+}
+
+.firstline {
     margin-right: 330px;
 }
 
-.m10 {
+.lastline {
     margin-left: 330px;
 }
 
@@ -58,6 +69,10 @@ h1 {
     width: 33%;
     max-width: 660px;
     min-width: 440px;
+}
+
+.youWin {
+    display: none;
 }
 
 canvas {
@@ -80,5 +95,3 @@ canvas {
         display: none;
     }
 }
-
-.startbutton:hover {}

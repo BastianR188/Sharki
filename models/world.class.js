@@ -8,6 +8,7 @@ class World {
     keyboard;
     camera_x = 0;
     intervalIds = [];
+    youWin = false;
 
 
     constructor(canvas, keyboard) {
@@ -60,26 +61,26 @@ class World {
         }, 200)
     }
     YouLose() {
-        if (!world.level.enemies[0].StartIntro) {
-            this.statusbar.botonGameOver[0].x = this.character.x + 91.5;
-            this.statusbar.botonTryAgain[0].x = this.character.x + 140;
-        }
-        let YouLoseIntervall = setInterval(() => {
-            this.statusbar.botonGameOver[0].y += 2;
-            if (this.statusbar.botonGameOver[0].y >= 239) {
-                this.TryAgain();
-                clearInterval(YouLoseIntervall);
-            }
-        }, 1000 / 60);
+        // if (!world.level.enemies[0].StartIntro) {
+        //     this.statusbar.botonGameOver[0].x = this.character.x + 91.5;
+        //     this.statusbar.botonTryAgain[0].x = this.character.x + 140;
+        // }
+        // let YouLoseIntervall = setInterval(() => {
+        //     this.statusbar.botonGameOver[0].y += 2;
+        //     if (this.statusbar.botonGameOver[0].y >= 239) {
+        //         this.TryAgain();
+        //         clearInterval(YouLoseIntervall);
+        //     }
+        // }, 1000 / 60);
 
     }
     TryAgain() {
-        let TryAgainIntervall = setInterval(() => {
-            this.statusbar.botonTryAgain[0].y -= 2;
-            if (this.statusbar.botonTryAgain[0].y <= 350) {
-                clearInterval(TryAgainIntervall);
-            }
-        }, 1000 / 60);
+        // let TryAgainIntervall = setInterval(() => {
+        //     this.statusbar.botonTryAgain[0].y -= 2;
+        //     if (this.statusbar.botonTryAgain[0].y <= 350) {
+        //         clearInterval(TryAgainIntervall);
+        //     }
+        // }, 1000 / 60);
     }
     checkWin() {
         let checkWinIntervall = setInterval(() => {
@@ -93,14 +94,8 @@ class World {
     };
 
     YouWin() {
-        // let YouWinIntervall = setInterval(() => {
-        //     this.statusbar.botonYouWin[0].y += 2;
-        //     this.statusbar.YouwinBG[0].y += 2;
-        //     if (this.statusbar.botonYouWin[0].y >= 239) {
-        //         this.TryAgain();
-        //         clearInterval(YouWinIntervall);
-        //     }
-        // }, 1000 / 60);
+  this.youWin = true;
+  console.log(this.youWin);
     }
 
     ceckFinalFight() {
