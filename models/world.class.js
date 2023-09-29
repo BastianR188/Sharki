@@ -94,8 +94,9 @@ class World {
     };
 
     YouWin() {
-  this.youWin = true;
-  console.log(this.youWin);
+        const youWinSound = new Audio('audio/levelComplete.mp3');
+        youWinSound.play();
+  document.getElementById('youWin').classList.remove('none');
     }
 
     ceckFinalFight() {
