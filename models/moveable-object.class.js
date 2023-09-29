@@ -14,10 +14,7 @@ class MoveableObject extends DrawAbleObject {
     attackPower = 0;
     spamProtection = false;
 
-    setStoppableInterval(fn, time) {
-        let id = setInterval(fn, time);
-        intervalIds.push(id);
-    }
+
 
     applySwimGravity() {
         setInterval(() => {
@@ -63,21 +60,38 @@ class MoveableObject extends DrawAbleObject {
     hit(mo) {
         if (!this.spamProtect()) {
             if (this.live > 0) {
-                if (mo instanceof JellyFish) {
-                    this.isShocked = true;
-                } this.live -= mo.attackPower;
-                if (this.live <= 0) {
-                    this.live = 0;
-                    this.currentImage = 0;
-                }
+                this.live -= mo.attackPower;
                 this.lastHit = new Date().getTime();
-                if (this.otherDirection) {
-                    this.x += 50;
-                } else { this.x -= 50; }
-                if (this.world.level.enemies[0].StartIntro) {
-                } else { this.world.camera_x = -this.x + 100; }
+                this.ifJellyFish(mo);
+                this.ifDead();
+                this.stunBack();
+                this.stunBackCamera();
             }
         }
+    }
+
+    ifJellyFish(mo) {
+        if (mo instanceof JellyFish) {
+            this.isShocked = true;
+        }
+    }
+
+    ifDead() {
+        if (this.live <= 0) {
+            this.live = 0;
+            this.currentImage = 0;
+        }
+    }
+
+    stunBackCamera() {
+        if (this.world.level.enemies[0].StartIntro) {
+        } else { this.world.camera_x = -this.x + 100; }
+    }
+
+    stunBack() {
+        if (this.otherDirection) {
+            this.x += 50;
+        } else { this.x -= 50; }
     }
 
     isHurt() {
@@ -94,39 +108,61 @@ class MoveableObject extends DrawAbleObject {
 
     attack(image, img, poison, slap) {
         if (!this.isAttacking) {
-            this.isAttacking = true;
-            this.isAnimating = true;
-            let i = 0;
+            let i = this.startAttackAnimation();
             let intervalId = setInterval(() => {
                 if (!this.isHurt()) {
-                    let path = image[i];
-                    this.img = this.imgCache[path];
-                    i++;
-                    if (i == 4 && slap) {
-                        this.attackDmg = true;
-                    }
-                    if (i == 5 && slap) {
-                        this.attackDmg = false;
-                    }
-                    if (i >= image.length) {
-                        clearInterval(intervalId);
-                        this.isAttacking = false;
-                        this.isAnimating = false;
-                        this.attackDmg = false;
-                        if (!slap) {
-                            this.createBubble(img, this.otherDirection, poison);
-                        }
-                        i = 0;
-                    }
+                    i = this.AttackAni(i, image, slap, intervalId, img, poison);
                 } else {
-                    clearInterval(intervalId);
-                    this.isAttacking = false;
-                    this.isAnimating = false;
-                    this.attackDmg = false;
-                    i = 0;
+                    i = this.EndAttack(intervalId, i);
                 }
             }, 100);
         }
+    }
+
+    EndAttack(intervalId, i) {
+        clearInterval(intervalId);
+        this.notAttack();
+        i = 0;
+        return i;
+    }
+
+    AttackAni(i, image, slap, intervalId, img, poison) {
+        i = this.attackAnimation(image, i, slap);
+        if (i >= image.length) {
+            clearInterval(intervalId);
+            this.notAttack();
+            if (!slap) {
+                this.createBubble(img, this.otherDirection, poison);
+            }
+            i = 0;
+        }
+        return i;
+    }
+
+    startAttackAnimation() {
+        this.isAttacking = true;
+        this.isAnimating = true;
+        let i = 0;
+        return i;
+    }
+
+    attackAnimation(image, i, slap) {
+        let path = image[i];
+        this.img = this.imgCache[path];
+        i++;
+        if (i == 4 && slap) {
+            this.attackDmg = true;
+        }
+        if (i == 5 && slap) {
+            this.attackDmg = false;
+        }
+        return i;
+    }
+
+    notAttack() {
+        this.isAttacking = false;
+        this.isAnimating = false;
+        this.attackDmg = false;
     }
 
     isDead() {
@@ -134,13 +170,10 @@ class MoveableObject extends DrawAbleObject {
     }
 
     createBubble(img, od, p) {
-        if (od) {
-            let bubble = new Bubble(img, this.x, this.y + this.height / 2, od, p);
-            world.bubbles.push(bubble);
-        } else {
-            let bubble = new Bubble(img, this.x + this.colx + this.colwidth, this.y + this.height / 2, od, p);
-            world.bubbles.push(bubble);
-        }
+        let bubble
+        if (od) { bubble = new Bubble(img, this.x, this.y + this.height / 2, od, p) }
+        else { bubble = new Bubble(img, this.x + this.colx + this.colwidth, this.y + this.height / 2, od, p) }
+        world.bubbles.push(bubble);
     }
 
     moveRight() {
@@ -163,6 +196,7 @@ class MoveableObject extends DrawAbleObject {
 
     moveToCharY() {
         let intervalIdmoveToCharY = setInterval(() => {
+            if (this.isDead()) { clearInterval(intervalIdmoveToCharY); }
             try {
                 if (!this.isDead() && !this.isHurt() && world.character.live > 0) {
                     if (this.SwimLine > world.character.y + world.character.coly + world.character.colheight) {
@@ -170,13 +204,14 @@ class MoveableObject extends DrawAbleObject {
                     } else if (this.SwimLine < world.character.y + world.character.coly + world.character.colheight) {
                         this.SwimLine -= -this.speedY;
                     }
-                } if (this.isDead() || world.character.live == 0) { clearInterval(intervalIdmoveToCharY); }
+                }
             } catch { }
         }, 1000 / 60);
     }
 
     moveToCharX() {
         let intervalIdmoveToCharX = setInterval(() => {
+            if (this.isDead()) { clearInterval(intervalIdmoveToCharX) }
             try {
                 if (!this.isDead() && !this.isHurt() && world.character.live > 0) {
                     if (this.x >= world.character.x + world.character.colx + (world.character.colwidth / 2)) {
@@ -184,7 +219,7 @@ class MoveableObject extends DrawAbleObject {
                     } else if (this.x <= world.character.x + world.character.colx) {
                         this.x -= -this.speed;
                     }
-                } if (this.isDead() || world.character.live == 0) { clearInterval(intervalIdmoveToCharX); }
+                }
             } catch { }
         }, 1000 / 60);
     }
@@ -209,19 +244,29 @@ class MoveableObject extends DrawAbleObject {
         }
     }
 
-    playAnimationAtOnce(img) {
+    playAnimationAtOnce(images) {
         this.isAnimating = true;
-        let i = 0;
+        let currentImage = 0;
         let intervalId = setInterval(() => {
-            let path = img[i];
-            this.img = this.imgCache[path];
-            i++;
-            if (i >= img.length) {
-                clearInterval(intervalId);
-                this.isAnimating = false;
-                i = 0;
+            currentImage = this.Animation(images, currentImage);
+            if (currentImage >= images.length) {
+                currentImage = this.stopAnimation(intervalId, currentImage);
             }
         }, 170);
     }
 
+
+    stopAnimation(intervalId, currentImage) {
+        clearInterval(intervalId);
+        this.isAnimating = false;
+        currentImage = 0;
+        return currentImage;
+    }
+
+    Animation(images, currentImage) {
+        let path = images[currentImage];
+        this.img = this.imgCache[path];
+        currentImage++;
+        return currentImage;
+    }
 }

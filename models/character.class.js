@@ -8,7 +8,7 @@ class Character extends MoveableObject {
     colx = 80;
     coly = 170;
     ishurt = false;
-    speed = 1;
+    speed = 1.2;
     specialPower = 25;
     live = 100;
     collectedCoin = 0;
@@ -196,17 +196,17 @@ class Character extends MoveableObject {
 
         let intervallIDAnimation = setInterval(() => {
             if (this.isDead()) {
-                this.CharDeadAnimation(intervallIDAnimation);
+                return this.CharDeadAnimation(intervallIDAnimation);
             } if (this.isHurt()) {
-                this.CharHurtAnimation();
+                return this.CharHurtAnimation();
             } if (this.spamProtect()) {
-                this.playAnimation(this.SpamProtect_Images);
+                return this.playAnimation(this.SpamProtect_Images);
             } if (this.world.keyboard.SPACE == true || this.isAnimating == true) {
                 return this.resetIdleTimer();
             } if (this.world.keyboard.RIGHT == true || this.world.keyboard.LEFT == true || this.world.keyboard.UP == true || this.world.keyboard.DOWN == true) {
-                this.CharSwimAnimation();
-            } if (this.isIdle == true) {
-                this.CharIdleAnimation();
+                return this.CharSwimAnimation();
+            } if (this.isIdle || this.isAnimating) {
+                return this.CharIdleAnimation();
             }
             this.playAnimation(this.Idle_Images);
         }, 170);
@@ -250,7 +250,6 @@ class Character extends MoveableObject {
 
     CharIdleAnimation() {
         this.playAnimationAtOnce(this.LongIdle_Images);
-        setTimeout(this.playAnimation(this.Sleep_Images, 2380));
     }
 
     CharSwimAnimation() {
