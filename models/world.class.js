@@ -114,7 +114,7 @@ class World {
     checkCollision() {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy, 0) && !enemy.isDead()) {
+                if (this.character.isColliding(enemy, 0) && !enemy.isDead() && !this.character.isDead() && !this.character.isDead()) {
                     this.character.hit(enemy);
                 }
             })
@@ -146,7 +146,7 @@ class World {
             for (let i = 0; i < this.level.items.length; i++) {
                 const item = this.level.items[i];
 
-                if (this.character.isColliding(item, 0)) {
+                if (this.character.isColliding(item, 0) && !this.character.isDead()) {
                     if (item instanceof Coin) {
                         const collectCoinSound = new Audio('audio/coin2.mp3'); // create a new instance of the Audio class
                         collectCoinSound.play(); // play the sound
@@ -154,6 +154,8 @@ class World {
                         this.level.items.splice(i, 1);
                     }
                     if (item instanceof Poison) {
+                        const collectPoisonSound = new Audio('audio/collectitem.mp3');
+                        collectPoisonSound.play();
                         this.character.specialPower += 25;
                         this.level.items.splice(i, 1);
                     }
@@ -194,6 +196,8 @@ class World {
                         if (enemy instanceof JellyFish) {
                             this.character.hit(enemy);
                         } else {
+                            const slapSound = new Audio('audio/slap.mp3');
+                            slapSound.play();
                             enemy.live -= this.character.attackPower;
                             enemy.lastHit = new Date().getTime();
                         }

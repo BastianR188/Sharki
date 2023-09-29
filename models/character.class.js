@@ -260,6 +260,8 @@ class Character extends MoveableObject {
 
     CharHurtAnimation() {
         if (this.isShocked) {
+            const shockSound = new Audio('audio/shock.mp3');
+            shockSound.play();
             this.playAnimation(this.HurtElectricShock_Images);
         } else {
             this.playAnimation(this.HurtPoisoned_Images);
@@ -268,8 +270,12 @@ class Character extends MoveableObject {
 
     CharDeadAnimation(intervallIDAnimation) {
         if (this.isShocked) {
+            const shockSound = new Audio('audio/shock.mp3');
+            shockSound.play();
             this.deadShockAnimation();
         } else {
+            const charHitSound = new Audio('audio/charHit.mp3');
+            charHitSound.play();
             this.deadPoisonedAnimation();
         } clearInterval(intervallIDAnimation);
     }

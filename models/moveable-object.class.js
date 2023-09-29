@@ -62,6 +62,8 @@ class MoveableObject extends DrawAbleObject {
             if (this.live > 0) {
                 this.live -= mo.attackPower;
                 this.lastHit = new Date().getTime();
+                const charHitSound = new Audio('audio/charHit.mp3');
+                charHitSound.play();
                 this.ifJellyFish(mo);
                 this.ifDead();
                 this.stunBack();
@@ -109,6 +111,10 @@ class MoveableObject extends DrawAbleObject {
     attack(image, img, poison, slap) {
         if (!this.isAttacking) {
             let i = this.startAttackAnimation();
+            if (slap) {
+                const slapSwoothSound = new Audio('audio/miss.mp3');
+                slapSwoothSound.play();
+            }
             let intervalId = setInterval(() => {
                 if (!this.isHurt()) {
                     i = this.AttackAni(i, image, slap, intervalId, img, poison);
