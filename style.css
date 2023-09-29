@@ -16,7 +16,44 @@ h1 {
     font-size: xxx-large;
     color: white;
     text-shadow: 3px 3px 9px black;
+}
 
+.btn {
+    border: 8px white solid;
+    padding: 25px 60px 25px 60px;
+    background-color: #7FFFE0;
+    border-radius: 25px;
+    font-family: 'Luckiest Guy', Tahoma, Verdana, sans-serif;
+    color: #531A82;
+    font-size: xxx-large;
+    transition: 0.125s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #FCEE21;
+    box-shadow: 3px 3px 9px black;
+    margin-left: 30px;
+    transition: 0.125s ease-in-out;
+    cursor: pointer;
+}
+
+.m5 {
+    margin-right: 330px;
+}
+
+.m10 {
+    margin-left: 330px;
+}
+
+.main_menu {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    width: 33%;
+    max-width: 660px;
+    min-width: 440px;
 }
 
 canvas {
