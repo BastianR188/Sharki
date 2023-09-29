@@ -61,18 +61,9 @@ class World {
         }, 200)
     }
     YouLose() {
-        // if (!world.level.enemies[0].StartIntro) {
-        //     this.statusbar.botonGameOver[0].x = this.character.x + 91.5;
-        //     this.statusbar.botonTryAgain[0].x = this.character.x + 140;
-        // }
-        // let YouLoseIntervall = setInterval(() => {
-        //     this.statusbar.botonGameOver[0].y += 2;
-        //     if (this.statusbar.botonGameOver[0].y >= 239) {
-        //         this.TryAgain();
-        //         clearInterval(YouLoseIntervall);
-        //     }
-        // }, 1000 / 60);
-
+        const youloseSound = new Audio('audio/youlose.mp3');
+        youloseSound.play();
+        document.getElementById('youLose').classList.remove('none');
     }
     TryAgain() {
         // let TryAgainIntervall = setInterval(() => {
