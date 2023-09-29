@@ -29,6 +29,10 @@ h1 {
     transition: 0.125s ease-in-out;
 }
 
+.none {
+    display: none !important;
+}
+
 .btn:hover {
     background-color: #FCEE21;
     box-shadow: 3px 3px 9px black;

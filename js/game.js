@@ -3,11 +3,13 @@ let ctx;
 let world;
 let keyboard = new Keyboard();
 
-
+function toggleClass(element, className) {
+    document.getElementById(element).classList.toggle(className);
+}
 
 function init() {
     document.getElementById('gameboard').innerHTML = `<canvas id="canvas" width="720p" height="480"></canvas>`;
-    document.getElementById('start-button').innerHTML = ``;
+    toggleClass('main-menu', 'none');
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     ctx = canvas.getContext('2d');
