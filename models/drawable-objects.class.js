@@ -33,7 +33,15 @@ class DrawAbleObject {
     let Sound = new Audio(audio);
     audioElements.push(Sound);
     Sound.volume = document.getElementById("volumeControl").value;
+    Sound.addEventListener("ended", () => {
+      audioElements.splice(audioElements.indexOf(Sound), 1); // Remove the Audio object from the audioElements array
+    });
     Sound.play();
+  }
+
+  setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    intervalIds.push(id);
   }
 
   drawFrame(ctx) {
