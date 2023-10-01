@@ -36,7 +36,7 @@
 </head>
 
 <body onload="onload()">
-    <div class="main_overlay none" id="keyoverlay" onclick="toggleClass('keyoverlay', 'none')"></div>
+    <div class="main_overlay none" id="keyoverlay" onclick="toggleClass('keyoverlay', 'none')"><input type="text" placeholder="drücken Sie eine beliebige Taste ..."></div>
         <h1>Sharki</h1>
         <div class="main_menu" id="main-menu">
             <div id="start-button" class="firstline">
@@ -77,7 +77,12 @@
                 <ul id="key5"></ul>
             </ol>
             <ol>
-                <button onclick="newKey(); toggleClass('keyoverlay', 'none')">X</button>
+                <ul><button onclick="newKey(0)">X</button></ul>
+                <ul><button onclick="newKey(1)">X</button></ul>
+                <ul><button onclick="newKey(2)">X</button></ul>
+                <ul><button onclick="newKey(3)">X</button></ul>
+                <ul><button onclick="newKey(4)">X</button></ul>
+                <ul><button onclick="newKey(5)">X</button></ul>
             </ol>
         </div>
    
