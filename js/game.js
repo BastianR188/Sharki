@@ -1,8 +1,25 @@
 let canvas;
 let ctx;
 let world;
+let audioElements = [];
 let keyboard = new Keyboard();
 keys = [38, 39, 40, 37, 32, 68];
+
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const gainNode = audioContext.createGain();
+gainNode.connect(audioContext.destination);
+
+audioElements.forEach(audio => {
+  const source = audioContext.createMediaElementSource(audio);
+  source.connect(gainNode);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const volumeControl = document.getElementById('volumeControl');
+  volumeControl.addEventListener('input', () => {
+    gainNode.gain.value = volumeControl.value;
+  });
+});
 
 function getReadableKeyCode(keyCode) {
   var keyMap = {
