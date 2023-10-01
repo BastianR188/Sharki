@@ -94,6 +94,18 @@ canvas {
     background-color: black;
     display: block;
 }
+.settings {
+    display: flex;
+}
+
+.main_overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+}
 
 @media only screen and (max-width: 720px) {
     canvas, .imgWin {

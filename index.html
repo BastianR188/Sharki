@@ -35,32 +35,52 @@
     <script src="./js/game.js"></script>
 </head>
 
-<body>
-
-    <h1>Sharki</h1>
-    <div class="main_menu" id="main-menu">
-        <div id="start-button" class="firstline">
-            <button class="btn" onclick="init()">Start</button>
+<body onload="onload()">
+    <div class="main_overlay none" id="keyoverlay" onclick="toggleClass('keyoverlay', 'none')"></div>
+        <h1>Sharki</h1>
+        <div class="main_menu" id="main-menu">
+            <div id="start-button" class="firstline">
+                <button class="btn" onclick="init()">Start</button>
+            </div>
+            <div class="">
+                <button class="btn">Settings</button>
+            </div>
+            <div class="lastline">
+                <button class="btn">Score</button>
+            </div>
         </div>
-        <div class="">
-            <button class="btn">Settings</button>
+        <div class="game_board">
+            <div id="gameboard">
+            </div>
+            <div class="overlays">
+                <div class="boton none" id="youWin"><img class="imgWin"
+                        src="img/6.Botones/Tittles/You win/Mesa de trabajo 1.png"></div>
+                <div class="gameover boton none" id="youLose"><img class="imgLose"
+                        src="img/6.Botones/Tittles/Game Over/Recurso 13.png"></div>
+            </div>
         </div>
-        <div class="lastline">
-            <button class="btn">Score</button>
+        <div class="settings">
+            <ol>
+                <ul>Go UP</ul>
+                <ul>Go Right</ul>
+                <ul>Go Down</ul>
+                <ul>Go Left</ul>
+                <ul>Slap Attack</ul>
+                <ul>Blubber Attack</ul>
+            </ol>
+            <ol>
+                <ul id="key0"></ul>
+                <ul id="key1"></ul>
+                <ul id="key2"></ul>
+                <ul id="key3"></ul>
+                <ul id="key4"></ul>
+                <ul id="key5"></ul>
+            </ol>
+            <ol>
+                <button onclick="newKey(); toggleClass('keyoverlay', 'none')">X</button>
+            </ol>
         </div>
-    </div>
-    <div class="game_board">
-        <div id="gameboard">
-        </div>
-        <div class="overlays">
-            <div class="boton none" id="youWin"><img class="imgWin" src="img/6.Botones/Tittles/You win/Mesa de trabajo 1.png"></div>
-            <div class="gameover boton none" id="youLose"><img class="imgLose" src="img/6.Botones/Tittles/Game Over/Recurso 13.png"></div>
-        </div>
-    </div>
-    <!-- <div>
-        <button onclick="restartGame()">Rest</button>
-    </div> -->
-
+   
 </body>
 
 </html>
