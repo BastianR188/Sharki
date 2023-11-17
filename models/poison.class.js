@@ -21,10 +21,11 @@ class Poison extends MoveableObject {
         this.y = y;
         this.Animate();
     }
+
+
     Animate() {
         setInterval(() => {
             this.playAnimation(this.Poison_Images);
         }, 170)
-
     }
 }

@@ -6,12 +6,23 @@ class DrawAbleObject {
   width = 100;
   currentImage = 0;
   imgCache = {};
+  
 
+  /**
+   * creates a new img of the respective object
+   * @param {any} path
+   * @returns {any}
+   */
   loadImage(path) {
     this.img = new Image();
     this.img.src = path;
   }
 
+  /**
+   * creates several new images of the respective object
+   * @param {any} array
+   * @returns {any}
+   */
   loadImages(array) {
     array.forEach((path) => {
       let img = new Image();
@@ -20,6 +31,11 @@ class DrawAbleObject {
     });
   }
 
+  /**
+   * draws the object based on the coordinates and images
+   * @param {any} ctx
+   * @returns {any}
+   */
   draw(ctx) {
     try {
       ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -29,6 +45,11 @@ class DrawAbleObject {
     }
   }
 
+  /**
+   * lets the sound of the respective object play
+   * @param {any} audio
+   * @returns {any}
+   */
   playSound(audio) {
     let Sound = new Audio(audio);
     audioElements.push(Sound);
@@ -37,41 +58,5 @@ class DrawAbleObject {
       audioElements.splice(audioElements.indexOf(Sound), 1); // Remove the Audio object from the audioElements array
     });
     Sound.play();
-  }
-
-  setStoppableInterval(fn, time) {
-    let id = setInterval(fn, time);
-    intervalIds.push(id);
-  }
-
-  drawFrame(ctx) {
-    //     if (this instanceof MoveableObject) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = "1";
-    //         ctx.strokeStyle = "red";
-    //         ctx.rect(this.x, this.y, this.width, this.height);
-    //         ctx.stroke();
-    //     }
-    //     if (this instanceof MoveableObject) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = "1";
-    //         ctx.strokeStyle = "red";
-    //         ctx.rect(this.x + this.colx, this.y + this.coly, this.colwidth, this.colheight);
-    //         ctx.stroke();
-    //     }
-    //     if (this instanceof Character) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = "1";
-    //         ctx.strokeStyle = "red";
-    //         ctx.rect(this.x + this.colx, this.y + this.coly, this.colwidth, this.colheight);
-    //         ctx.stroke();
-    //     }
-    //     if (this instanceof FinalEnemy) {
-    //         ctx.beginPath();
-    //         ctx.lineWidth = "1";
-    //         ctx.strokeStyle = "red";
-    //         ctx.rect(this.x + this.colx, this.y + this.coly, this.colwidth, this.colheight);
-    //         ctx.stroke();
-    //     }
   }
 }

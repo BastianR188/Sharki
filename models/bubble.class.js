@@ -5,13 +5,13 @@ class Bubble extends MoveableObject {
         './img/1.Sharkie/4.Attack/Bubble trap/Bubble/3.png',
         './img/1.Sharkie/4.Attack/Bubble trap/Bubble/4.png',
 
-    ]
+    ];
     bubbleWithOutPoison_Images = [
         './img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble/1.png',
         './img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble/2.png',
         './img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble/3.png',
         './img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble/4.png',
-    ]
+    ];
     Images;
     speed = 2;
     height = 50;
@@ -26,7 +26,16 @@ class Bubble extends MoveableObject {
     x;
     y;
 
-    // img, position x, position y, in welche Richtung, ob mit oder ohne gift
+ 
+    /**
+     * img, position x, position y, in which direction, whether with or without poison
+     * @param {any} img
+     * @param {any} x
+     * @param {any} y
+     * @param {any} od - direction
+     * @param {any} p - if poison
+     * @returns {any}
+     */
     constructor(img, x, y, od, p) {
         super().loadImage(img);
         this.loadImages(this.bubble_Images);
@@ -42,6 +51,7 @@ class Bubble extends MoveableObject {
         this.Animate(od);
 
     }
+    
     Animate(od) {
         if (od == true) {
             this.moveLeft();
@@ -49,10 +59,10 @@ class Bubble extends MoveableObject {
             this.moveRight();
         }
 
-        // das die Blase eine auf und ab Bewegung macht
+        // that the bladder makes an up and down movement
         this.waveMove();
 
-        // spielt die animation ab
+        // plays the animation
         setInterval(() => {
             this.playAnimation(this.Images);
         }, 75)

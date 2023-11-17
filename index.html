@@ -1,15 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sharki</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
 
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./img/favicon_io/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./img/favicon_io/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./img/favicon_io/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./img/favicon_io/site.webmanifest" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="./js/allimg.js"></script>
     <script src="./models/drawable-objects.class.js"></script>
     <script src="./models/moveable-object.class.js"></script>
     <script src="./models/bubble.class.js"></script>
@@ -20,73 +43,195 @@
     <script src="./models/coin.class.js"></script>
     <script src="./models/poison.class.js"></script>
     <script src="./models/status-bar.class.js"></script>
-
     <script src="./models/world.class.js"></script>
     <script src="./models/background.class.js"></script>
-
     <script src="./models/keyboard.class.js"></script>
-
-
     <script src="./models/hud.class.js"></script>
     <script src="./models/level.class.js"></script>
     <script src="./levels/status-bar.js"></script>
     <script src="./levels/level1.js"></script>
-    <!-- <script src="./levels/level2.js"></script> -->
     <script src="./js/game.js"></script>
-</head>
+    <script src="./js/keybinding.js"></script>
+  </head>
 
-<body onload="onload()">
-    <div class="main_overlay none" id="keyoverlay" onclick="toggleClass('keyoverlay', 'none')"><input type="text" placeholder="drücken Sie eine beliebige Taste ..."></div>
-        <h1>Sharki</h1>
-        <div class="main_menu" id="main-menu">
-            <div id="start-button" class="firstline">
-                <button class="btn" onclick="init()">Start</button>
-            </div>
-            <div class="">
-                <button class="btn">Settings</button>
-            </div>
-            <div class="lastline">
-                <button class="btn">Score</button>
-            </div>
+  <body onload="onload()">
+    <div class="loading_screen" id="loading-screen">
+      <div id="loader" class="loader">loading . . .</div>
+      <div>- please wait -</div>
+    </div>
+    <div id="load"></div>
+    <div class="mobile_overlay none" id="mobile-overlay">
+      Please hold<br />your device<br />horizontally<br /><img
+        src="./img/bg/pfeil.png"
+        class="invert"
+      />
+    </div>
+    <div class="full" id="fullscreen">
+      <div
+        class="main_overlay none"
+        id="keyoverlay"
+        onclick="toggleClass('keyoverlay', 'none')"
+      >
+        Press a key ...
+      </div>
+      <h1>Sharki's journey through the unknown</h1>
+      <div class="main_menu" id="main-menu">
+        <div class="firstline">
+          <button class="btn" onclick="toggleClass('introduction', 'none')">
+            Introduction
+          </button>
         </div>
+        <div id="start-button" class="">
+          <button
+            class="btn"
+            onclick="toggleClass('btn-game', 'none'), startGame(), toggleClass('touch_move_btn', 'none');
+                toggleClass('touch_action_btn', 'none')"
+          >
+            Start
+          </button>
+        </div>
+        <div class="lastline">
+          <button class="btn" onclick="toggleClass('settings', 'none')">
+            Settings
+          </button>
+        </div>
+      </div>
+      <div class="w-100">
         <div class="game_board">
-            <div id="gameboard">
+          <div id="gameboard"></div>
+          <div class="touch_move_main_container none" id="touch_move_btn">
+            <div class="btn_touch up" id="mobile-btn-up"></div>
+            <div class="touch_move_container">
+              <div class="btn_touch left" id="mobile-btn-left"></div>
+              <div class="btn_touch down" id="mobile-btn-down"></div>
+              <div class="btn_touch right" id="mobile-btn-right"></div>
             </div>
-            <div class="overlays">
-                <div class="boton none" id="youWin"><img class="imgWin"
-                        src="img/6.Botones/Tittles/You win/Mesa de trabajo 1.png"></div>
-                <div class="gameover boton none" id="youLose"><img class="imgLose"
-                        src="img/6.Botones/Tittles/Game Over/Recurso 13.png"></div>
+          </div>
+          <div class="touch_action_container none" id="touch_action_btn">
+            <div class="btn_touch btn_text" id="mobile-btn-slap">
+              <img
+                src="img/1.Sharkie/4.Attack/Fin slap/slap.png"
+                class="blubber_img"
+              />
             </div>
+            <div class="btn_touch btn_text" id="mobile-btn-blubber">
+              <img
+                src="./img/1.Sharkie/4.Attack/Bubble trap/Bubble/1.png"
+                class="blubber_img"
+              />
+            </div>
+          </div>
+          <div class="overlays">
+            <div class="boton none" id="youWin">
+              <img
+                class="imgWin"
+                src="img/6.Botones/Tittles/You win/Mesa de trabajo 1.png"
+              />
+            </div>
+            <div class="gameover boton none" id="youLose">
+              <img
+                class="imgLose"
+                src="img/6.Botones/Tittles/Game Over/Recurso 13.png"
+              />
+            </div>
+          </div>
+          <div class="volume_container mobile_menu none" id="btn-game">
+            <div class="mobile_menu_game">
+              <div class="vol_text" onclick="mute()">Volume</div>
+              <input
+                type="range"
+                id="volumeControl"
+                class="slider"
+                min="0"
+                max="1"
+                step="0.01"
+                value="0.1"
+              />
+            </div>
+            <div class="volume_container_mobile_menu">
+              <div class="vol_text" onclick="reset()">Restart</div>
+              <div class="vol_text" onclick="backToMenu()">Menu</div>
+            </div>
+          </div>
         </div>
-        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
-        <div class="settings">
-            <ol>
-                <ul>Go UP</ul>
-                <ul>Go Right</ul>
-                <ul>Go Down</ul>
-                <ul>Go Left</ul>
-                <ul>Slap Attack</ul>
-                <ul>Blubber Attack</ul>
-            </ol>
-            <ol>
-                <ul id="key0"></ul>
-                <ul id="key1"></ul>
-                <ul id="key2"></ul>
-                <ul id="key3"></ul>
-                <ul id="key4"></ul>
-                <ul id="key5"></ul>
-            </ol>
-            <ol>
-                <ul><button onclick="newKey(0)">X</button></ul>
-                <ul><button onclick="newKey(1)">X</button></ul>
-                <ul><button onclick="newKey(2)">X</button></ul>
-                <ul><button onclick="newKey(3)">X</button></ul>
-                <ul><button onclick="newKey(4)">X</button></ul>
-                <ul><button onclick="newKey(5)">X</button></ul>
-            </ol>
+      </div>
+      <button class="btn try_again none" onclick="reset()" id="try-again">
+        Try Again
+      </button>
+      <div class="settings none" id="settings">
+        <div class="settings_menu">
+          <div class="settings_keybinding">
+            <div class="col">
+              <div class="setting_text">KEY</div>
+              <div class="setting_text">Go UP</div>
+              <div class="setting_text">Go Right</div>
+              <div class="setting_text">Go Down</div>
+              <div class="setting_text">Go Left</div>
+              <div class="setting_text">Slap Attack</div>
+              <div class="setting_text">Blubber Attack</div>
+            </div>
+            <div class="col">
+              <div class="setting_text">Set new KEY</div>
+              <div
+                id="key0"
+                onclick="toggleClass('keyoverlay', 'none'), newKey('Go UP', 0)"
+                class="change_btn"
+              ></div>
+              <div
+                id="key1"
+                onclick="toggleClass('keyoverlay', 'none'), newKey('Go Right', 1)"
+                class="change_btn"
+              ></div>
+              <div
+                id="key2"
+                onclick="toggleClass('keyoverlay', 'none'), newKey('Go Down', 2)"
+                class="change_btn"
+              ></div>
+              <div
+                id="key3"
+                onclick="toggleClass('keyoverlay', 'none'), newKey('Go Left', 3)"
+                class="change_btn"
+              ></div>
+              <div
+                id="key4"
+                onclick="toggleClass('keyoverlay', 'none'), newKey('Slap Attack', 4)"
+                class="change_btn"
+              ></div>
+              <div
+                id="key5"
+                onclick="toggleClass('keyoverlay', 'none'), newKey('Blubber Attack', 5)"
+                class="change_btn"
+              ></div>
+            </div>
+          </div>
         </div>
-   
-</body>
-
+        <div class="settings_fullscreen mt-24">
+          <button class="second_btn" onclick="toggleClass('settings', 'none')">
+            Back
+          </button>
+          <button class="second_btn" onclick="fullscreen()">Fullscreen</button>
+        </div>
+      </div>
+      <div class="settings introduction none" id="introduction">
+        <div>
+          Sharki's journey through the unknown is a game about a shark named
+          Sharki who embarks on a journey through the deep waters.<br /><br />While
+          there are several references to "journey through the unknown" in
+          various contexts, this game is unique in its focus on a shark's
+          journey.<br /><br />As players navigate through the game, they will
+          encounter various challenges and obstacles that Sharki must overcome
+          to continue on his journey.<br /><br />The game promises to be an
+          exciting adventure that will keep players engaged and entertained as
+          they explore the unknown depths of the ocean with Sharki.
+        </div>
+        <button
+          class="second_btn"
+          onclick="toggleClass('introduction', 'none')"
+        >
+          Back
+        </button>
+      </div>
+    </div>
+    <div class="loadimg" id="loadingElement"></div>
+  </body>
 </html>
